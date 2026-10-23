@@ -9,7 +9,7 @@ console.log("🌱 Database seeded.");
 async function seedEmployees() {
   for (let i = 0; i < 15; i++) {
     const employee = {
-      name: " Employee " + i,
+      name: "Employee " + i,
       birthday: "1992-10-07",
       salary: Math.floor(Math.random() * 250000),
     };
