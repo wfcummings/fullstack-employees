@@ -4,9 +4,9 @@ import db from "#db/client";
 export async function createEmployee({ name, birthday, salary }) {
   const sql = `
   INSERT INTO employees
-  (name, birthday, salary)
+    (name, birthday, salary)
   VALUES
-  ($1, $2, $3)
+    ($1, $2, $3)
   RETURNING *
   `;
 
