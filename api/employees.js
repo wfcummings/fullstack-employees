@@ -2,7 +2,11 @@ import express from "express";
 const router = express.Router();
 export default router;
 
-import { createEmployee, getEmployees } from "#db/queries/employees";
+import {
+  createEmployee,
+  getEmployees,
+  getEmployee,
+} from "#db/queries/employees";
 
 //POST Create a employee
 router.post("/", async (req, res) => {
@@ -21,4 +25,16 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   const employees = await getEmployees();
   res.send(employees);
+});
+
+// GET :id
+
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const employee = await getEmployee(+id);
+
+  if (!employee)
+    return res.status(404).send(`Employee with #${id} does not exist.`);
+
+  res.send(employee);
 });
