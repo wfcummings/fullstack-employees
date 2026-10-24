@@ -6,6 +6,7 @@ import {
   createEmployee,
   getEmployees,
   getEmployee,
+  deleteEmployee,
 } from "#db/queries/employees";
 
 //POST Create a employee
@@ -37,4 +38,16 @@ router.get("/:id", async (req, res) => {
     return res.status(404).send(`Employee with #${id} does not exist.`);
 
   res.send(employee);
+});
+
+//DELETE employee
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  const employee = await deleteEmployee(+id);
+
+  if (!employee)
+    return res.status(404).send(`Employee with #${id} does not exist.`);
+
+  res.status(204).send(employee);
 });
