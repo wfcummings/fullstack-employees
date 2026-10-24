@@ -7,6 +7,7 @@ import {
   getEmployees,
   getEmployee,
   deleteEmployee,
+  updateEmployee,
 } from "#db/queries/employees";
 
 //POST Create a employee
@@ -50,4 +51,28 @@ router.delete("/:id", async (req, res) => {
     return res.status(404).send(`Employee with #${id} does not exist.`);
 
   res.status(204).send(employee);
+});
+
+//PUT to update employee
+
+router.put("/:id", async (req, res) => {
+  if (!req.body) return res.status(400).send("Request must have a body.");
+  const { name, birthday, salary } = req.body;
+
+  if (!name || !birthday || !salary)
+    return res
+      .status(400)
+      .send("Request body must have a name, birthday, and salary.");
+
+  const { id } = req.params;
+
+  const employee = await updateEmployee({
+    id: id,
+    name,
+    birthday,
+    salary,
+  });
+  if (!employee)
+    return res.status(404).send(`Employee with #${id} does not exist.`);
+  res.status(200).send(employee);
 });
